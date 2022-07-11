@@ -55,34 +55,3 @@ with open(output_path, 'w') as outputfile:
     min_month = all_months[index_of_min]
     print(f"Greatest Decrease in Profits: {min_month} (${min_pl:,})")
     outputfile.write(f"Greatest Decrease in Profits: {min_month} (${min_pl:,})\n")
-#print(all_months)
-
-## Financial Analysis
-
-# def total(numbers): 
-#     length = (numbers)
-#     total = 0.0
-#     for number in numbers:
-#         total += number
-#     return total / length
-# print(total(range[1 to 86]))
-
-#     reader = csv.DictReader(csvfile)
-#     count = 0
-#     fsa = []
-#     for row in reader:
-#         count = count + 1
-#         print(row['Date'])
-#         fsa.append(row['Date'])
-# print(fsa)
-# for file in budget_data:
-#     if file.endwitch(".csv"):
-#         with open(path + file, encoding='iso-8859-1') as budget_data:
-#             reader = csv.reader(budget_data)
-#             print(file, ":", sim(1 for row in reader))
-
-# def read_csv-files_in_a_dictionary(path):
-    # files = 
-
-        
-# row_count = sum(1 for row in budget_data)
