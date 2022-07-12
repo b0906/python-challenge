@@ -1,88 +1,88 @@
-# print("Hello, World!")
-# print("Isn't this groovy?")
 import os
 import csv
 
-csvpath = os.path.join('Resources','budget_data.csv')
+csvpath = os.path.join('Resources','election_data.csv')
 output_path = os.path.join("analysis", "results.txt")
-total_month = 0
-total_profit_losses = 0
-profit_loss_per_month = []
-prev = 0
-all_months = []
+total_votes = 0
+candidate_votes = {}
+candidate_percentage = {}
 
 
 with open(csvpath) as csvfile:
-    budget_data = csv.reader(csvfile, delimiter=',')
-    #print(budget_data)
-    csv_header = next(budget_data)
-    # print(f"CSV Header: {csv_header}")
+    election_data = csv.reader(csvfile, delimiter=',')
+    csv_header = next(election_data)
 
-    for row in budget_data:
-        # print(row)
-        total_month = total_month + 1 
-        total_profit_losses = int(row [1]) + total_profit_losses
-        if total_month == 1:
-            #[0]
-            profit_loss_per_month.append(0)
-            prev = int(row[1])
+    for row in election_data:
+        total_votes = total_votes + 1
+        current_candidate = row[2]
+
+        if current_candidate in candidate_votes:
+            candidate_votes[current_candidate] += 1
         else:
-            current_profit_loss = int(row[1])-prev
-            profit_loss_per_month.append(current_profit_loss)
-            prev = int(row[1])
-        all_months.append(row[0])
+            candidate_votes[current_candidate] = 1
 
-with open(output_path, 'w') as outputfile:
-    print("Financial Analysis")
-    outputfile.write("Financial Analysis\n")
+for candidate in candidate_votes:
+    votes = candidate_votes[candidate]
+    percentage = (votes/total_votes)*100
+    candidate_percentage[candidate] = percentage
+
+best_candidate = ""
+highest_votes = 0
+
+for candidate, votes in candidate_votes.items():
+    if votes > highest_votes:
+        highest_votes = votes
+        best_candidate = candidate
+        
+with open(output_path, 'w') as outputfile:     
+    print("Election Results")       
+    outputfile.write("Election Results\n")
     print("-"*20)
     outputfile.write("-"*20 + "\n")
-    print(f"Total Months: {total_month}")
-    outputfile.write(f"Total Months: {total_month}\n")
-    print(f"Total: ${total_profit_losses:,}")
-    outputfile.write(f"Total: ${total_profit_losses:,}\n")
-    print(f"Average Change: ${sum(profit_loss_per_month)/(total_month-1):,.2f}")
-    outputfile.write(f"Average Change: ${sum(profit_loss_per_month)/(total_month-1):,.2f}\n")
+    print(f"Total Votes: {total_votes}")
+    outputfile.write(f"Total Votes: {total_votes}\n")
+    
+    print("-"*20)
+    outputfile.write("-"*20 + "\n")
 
-    max_pl = max(profit_loss_per_month)
-    index_of_max = profit_loss_per_month.index(max_pl)
-    max_month = all_months[index_of_max]
-    print(f"Greatest Increase in Profits: {max_month} (${max_pl:,})")
-    outputfile.write(f"Greatest Increase in Profits: {max_month} (${max_pl:,})\n")
+    for candidate in candidate_votes:
+        votes = candidate_votes[candidate]
+        percentage = (votes/total_votes)*100
+        print(f"{candidate} (%{percentage:,.3f}) {votes}")
+        outputfile.write(f"{candidate} (%{percentage:,.3f}) {votes}\n")
 
-    min_pl = min(profit_loss_per_month)
-    index_of_min = profit_loss_per_month.index(min_pl)
-    min_month = all_months[index_of_min]
-    print(f"Greatest Decrease in Profits: {min_month} (${min_pl:,})")
-    outputfile.write(f"Greatest Decrease in Profits: {min_month} (${min_pl:,})\n")
-#print(all_months)
+    
+    # print(candidate_votes)
+    # outputfile.write(str(candidate_votes))
 
-## Financial Analysis
+    # print(candidate_votes.keys())
+    # print(candidate_votes.values())
+    # print()
+    # print(candidate_votes.items())
 
-# def total(numbers): 
-#     length = (numbers)
-#     total = 0.0
-#     for number in numbers:
-#         total += number
-#     return total / length
-# print(total(range[1 to 86]))
+    print("-"*20)
+    outputfile.write("-"*20 + "\n")
+    print(f"Winner: {best_candidate} (%{(highest_votes/total_votes)*100:,.3f}\n")
+    outputfile.write(f"Winner: {best_candidate} (%{(highest_votes/total_votes)*100:,.3f}\n")
+    print("-"*20)
+    outputfile.write("-"*20 + "\n")
 
-#     reader = csv.DictReader(csvfile)
-#     count = 0
-#     fsa = []
-#     for row in reader:
-#         count = count + 1
-#         print(row['Date'])
-#         fsa.append(row['Date'])
-# print(fsa)
-# for file in budget_data:
-#     if file.endwitch(".csv"):
-#         with open(path + file, encoding='iso-8859-1') as budget_data:
-#             reader = csv.reader(budget_data)
-#             print(file, ":", sim(1 for row in reader))
 
-# def read_csv-files_in_a_dictionary(path):
-    # files = 
 
-        
-# row_count = sum(1 for row in budget_data)
+
+
+
+
+# candidate_vote = {"Charles Casper Stockham": 23.049% (85213),
+# "Diana DeGette": 73.812% (272892),
+# "Raymon Anthony Doane": 3.139% (11606)}
+# print(candidate_vote)
+
+
+# #print(f"candidate_votes: )
+# print(f"The winning candidate is {best_candidate}")
+# print(f"They had this many votes {highest_votes}")
+# print(f"Percentage of votes: %{(highest_votes/total_votes)*100:,.3f}")
+# print(f"candidate %{(votes/total_votes)*100:,.3f} ({votes})\n")
+
+    
